@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ILCAMLAC 02 - Controllo in Produzione</title>
   <style>
     :root {
@@ -17,19 +17,19 @@
 
     body {
       margin: 0;
-      padding: 0;
+      padding: 5px;
       background-color: #f8f9fa;
       color: #000;
-      -webkit-text-size-adjust: 100%;
     }
 
+    /* Contenitore fisso stile A4 per desktop (come lo avevi all'inizio) */
     .container {
       width: 100%;
-      max-width: 100%;
+      max-width: 780px;
       margin: 0 auto;
       background: #fff;
-      padding: 6px 8px;
-      border: none;
+      padding: 8px 12px;
+      border: 2px solid var(--border-color);
     }
 
     /* Intestazione modulo */
@@ -41,7 +41,7 @@
 
     .header-table td, .header-table th {
       border: 1px solid var(--border-color);
-      padding: 4px 5px;
+      padding: 4px 6px;
       font-size: 11px;
       vertical-align: middle;
     }
@@ -51,7 +51,7 @@
     }
 
     .logo-container img {
-      max-width: 80px;
+      max-width: 100px;
       height: auto;
       display: block;
       margin: 0 auto;
@@ -59,17 +59,18 @@
 
     .header-title {
       font-weight: bold;
-      font-size: 12px;
+      font-size: 13px;
       text-align: center;
       background-color: var(--bg-header);
     }
 
     .info-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
       margin-bottom: 6px;
       font-size: 11px;
+      align-items: center;
     }
 
     .info-grid div {
@@ -85,10 +86,10 @@
 
     .info-grid input {
       width: 100%;
-      padding: 6px;
+      padding: 4px;
       border: 1px solid #777;
       border-radius: 3px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       text-transform: uppercase;
     }
@@ -96,17 +97,16 @@
     .action-top {
       display: flex;
       gap: 6px;
-      width: 100%;
+      justify-content: flex-end;
     }
 
     .btn-action {
-      flex: 1;
-      padding: 8px;
+      padding: 5px 10px;
       font-size: 11px;
       font-weight: bold;
       cursor: pointer;
       border-radius: 4px;
-      text-align: center;
+      transition: background 0.2s;
     }
 
     .btn-pdf {
@@ -114,18 +114,21 @@
       background-color: #28a745;
       color: #fff;
     }
+    .btn-pdf:hover { background-color: #218838; }
 
     .btn-reset {
       border: 2px solid #dc3545;
       background-color: #dc3545;
       color: #fff;
     }
+    .btn-reset:hover { background-color: #c82333; }
 
     /* Selezione turno */
     .shift-selector {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
       background: #eef2f5;
       padding: 6px;
       border: 1px solid #ccc;
@@ -133,13 +136,8 @@
       margin-bottom: 6px;
     }
 
-    .shift-selector span {
-      text-align: center;
-      font-size: 11px;
-    }
-
     .shift-btn {
-      padding: 8px;
+      padding: 5px 14px;
       font-size: 12px;
       font-weight: bold;
       border: 2px solid #0056b3;
@@ -147,11 +145,10 @@
       color: #0056b3;
       cursor: pointer;
       border-radius: 4px;
-      width: 100%;
-      text-align: center;
+      transition: all 0.2s;
     }
 
-    .shift-btn.active {
+    .shift-btn:hover, .shift-btn.active {
       background-color: #0056b3;
       color: #fff;
     }
@@ -160,83 +157,118 @@
       background-color: var(--bg-header);
       text-align: center;
       font-weight: bold;
-      font-size: 9px;
+      font-size: 10px;
       padding: 4px;
       border: 1px solid var(--border-color);
       border-bottom: none;
+      letter-spacing: 0.5px;
     }
 
-    /* Tabella Controlli adattata per riempire lo schermo */
-    .main-table-wrapper {
-      width: 100%;
-      overflow-x: hidden;
-    }
-
+    /* Tabella Controlli */
     .main-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 10.5px;
-      table-layout: fixed; /* Distribuisce le colonne equamente sullo schermo dell'iPhone */
+      font-size: 11px;
     }
 
     .main-table th, .main-table td {
       border: 1px solid var(--border-color);
-      padding: 3px 1px;
+      padding: 2px 3px;
       text-align: center;
       vertical-align: middle;
-      word-break: break-word;
     }
 
     .main-table th {
       background-color: var(--bg-header);
       font-weight: bold;
-      font-size: 9px;
+      font-size: 10px;
     }
 
     .main-table input[type="text"], .note-input {
       width: 100%;
-      padding: 4px 1px;
+      padding: 3px 2px;
       border: 1px solid #ddd;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: bold;
       text-transform: uppercase;
-      background: transparent;
+    }
+
+    .col-modello input, .col-commessa input {
+      text-align: center;
     }
 
     .main-table input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
+      width: 13px;
+      height: 17px;
       cursor: pointer;
     }
 
-    /* Proporzioni ottimizzate per smartphone */
-    .col-ora { width: 14%; font-weight: bold; background: #fafafa; font-size: 10px; }
-    .col-modello { width: 19%; }
-    .col-commessa { width: 16%; }
-    .col-check { width: 10%; }
-    .col-note { width: 31%; }
+    .col-ora { width: 50px; font-weight: bold; background: #fafafa; }
+    .col-modello { width: 105px; }
+    .col-commessa { width: 90px; }
+    .col-check { width: 65px; }
 
     /* Footer firma */
     .footer-section {
-      margin-top: 8px;
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: 11px;
     }
 
     .signature-box {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      gap: 10px;
+      align-items: center;
       font-weight: bold;
       width: 100%;
     }
 
     .signature-box input {
-      width: 100%;
-      padding: 6px;
+      flex: 1;
+      padding: 4px;
       border: 1px solid #777;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       text-transform: uppercase;
+    }
+
+    /* ===== REGOLE RESPONSIVE SOLO PER DISPOSITIVI MOBILI (SMARTPHONE) ===== */
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 2px;
+      }
+      .container {
+        max-width: 100% !important;
+        border: none;
+        padding: 4px 6px;
+      }
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .action-top {
+        justify-content: stretch;
+      }
+      .action-top button {
+        flex: 1;
+      }
+      .shift-selector {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .shift-btn {
+        width: 100%;
+        text-align: center;
+      }
+      .main-table {
+        min-width: 550px; /* Attiva lo scroll orizzontale pulito su mobile se lo schermo è stretto */
+      }
+      .main-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+      }
     }
 
     @media print {
@@ -249,18 +281,27 @@
         background: #fff;
       }
       .container {
-        max-width: 780px;
+        border: none;
+        box-shadow: none;
+        width: 100%;
+        max-width: none;
         padding: 0;
       }
       .shift-selector, .action-top {
         display: none !important;
       }
-      .main-table {
-        table-layout: auto;
+      .header-table td, .header-table th {
+        padding: 3px 5px;
+      }
+      .main-table th, .main-table td {
+        padding: 2px 3px;
       }
       .main-table input[type="text"], .note-input, .info-grid input, .signature-box input {
         border: none;
         background: transparent;
+        font-size: 10.5px;
+        font-weight: bold;
+        text-transform: uppercase;
       }
     }
   </style>
@@ -276,14 +317,14 @@
         <img src="ILCAM.jpg" alt="ILCAM Logo">
       </td>
       <td class="header-title">CONTROLLO IN PRODUZIONE</td>
-      <td style="width: 25%; font-size: 9px;">
+      <td style="width: 25%; font-size: 10px;">
         <strong>Modulo:</strong> ILCAMLAC 02<br>
         <strong>Rev. 00 del 11/10/2026</strong>
       </td>
     </tr>
     <tr>
-      <td style="text-align: center; font-size: 9px; font-weight: bold;">
-        REPARTO: FONDO &nbsp;|&nbsp; OP: LEVIGATURA RIBASSATI
+      <td style="text-align: center; font-size: 10px; font-weight: bold;">
+        REPARTO: FONDO &nbsp;&nbsp;|&nbsp;&nbsp; OPERAZIONE: LEVIGATURA RIBASSATI
       </td>
       <td></td>
     </tr>
@@ -322,9 +363,9 @@
           <th class="col-modello">MODELLO</th>
           <th class="col-commessa">COMMESSA</th>
           <th class="col-check">CONTROLLO VISIVO</th>
-          <th class="col-check">CONTROLLO RETRI</th>
-          <th class="col-check">CONTROLLO CON GRAFITE</th>
-          <th class="col-note">NOTE</th>
+          <th class="col-check">CON TINTA RETRI</th>
+          <th class="col-check">CON GRAFITE</th>
+          <th>NOTE</th>
         </tr>
       </thead>
       <tbody id="tableBody">
@@ -405,7 +446,7 @@
           <td class="col-check"><input type="checkbox"></td>
           <td class="col-check"><input type="checkbox"></td>
           <td class="col-check"><input type="checkbox"></td>
-          <td class="col-note">
+          <td>
             <input type="text" class="note-input" oninput="this.value = this.value.toUpperCase(); gestisciFlussoNote(this)" onkeydown="gestisciTastiNote(this, event)">
           </td>
         `;
@@ -446,7 +487,7 @@
     context.font = computedStyle.font;
 
     let larghezzaTesto = context.measureText(el.value).width;
-    let larghezzaUtileCella = el.clientWidth - 10; 
+    let larghezzaUtileCella = el.clientWidth - 15; 
 
     if (larghezzaTesto >= larghezzaUtileCella) {
       let testo = el.value;
@@ -488,7 +529,7 @@
           prossimaNote.selectionStart = prossimaNote.selectionEnd = prossimaNote.value.length;
         }
       }
-    } else asserzioneBackspace: if (e.key === 'Backspace' && el.selectionStart === 0 && el.selectionEnd === 0) {
+    } else if (e.key === 'Backspace' && el.selectionStart === 0 && el.selectionEnd === 0) {
       e.preventDefault();
       let trPrecedente = el.closest('tr').previousElementSibling;
       if (trPrecedente) {
