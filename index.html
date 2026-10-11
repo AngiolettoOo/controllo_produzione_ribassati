@@ -22,7 +22,7 @@
       color: #000;
     }
 
-    /* Contenitore fisso stile A4 per desktop (come lo avevi all'inizio) */
+    /* Contenitore fisso A4 */
     .container {
       width: 100%;
       max-width: 780px;
@@ -234,7 +234,7 @@
       text-transform: uppercase;
     }
 
-    /* ===== REGOLE RESPONSIVE SOLO PER DISPOSITIVI MOBILI (SMARTPHONE) ===== */
+    /* REGOLE RESPONSIVE SMARTPHONE */
     @media screen and (max-width: 600px) {
       body {
         padding: 2px;
@@ -263,7 +263,7 @@
         text-align: center;
       }
       .main-table {
-        min-width: 550px; /* Attiva lo scroll orizzontale pulito su mobile se lo schermo è stretto */
+        min-width: 550px; /* scroll orizzontale smartphone */
       }
       .main-table-wrapper {
         width: 100%;
@@ -310,7 +310,7 @@
 
 <div class="container">
 
-  <!-- Intestazione del Modulo con Logo -->
+  <!-- intestazione modulo -->
   <table class="header-table">
     <tr>
       <td rowspan="2" style="width: 25%;" class="logo-container">
@@ -330,7 +330,7 @@
     </tr>
   </table>
 
-  <!-- Area Data e Pulsanti Azione -->
+  <!-- data e pulsanti -->
   <div class="info-grid">
     <div>
       <label for="dataScheda">DATA:</label>
@@ -342,7 +342,7 @@
     </div>
   </div>
 
-  <!-- Selezione Turni -->
+  <!-- selezione turno -->
   <div class="shift-selector">
     <span><strong>SELEZIONA TURNO:</strong></span>
     <button class="shift-btn active" onclick="cambiaTurno('T1', event)">T1 (06:00 - 14:00)</button>
@@ -354,7 +354,7 @@
     CONTROLLI DA ESEGUIRSI CON FREQUENZE E MODALITÀ PREVISTE DAL PIANO DI CONTROLLO
   </div>
 
-  <!-- Tabella principale delle fasce orarie -->
+  <!-- tabella fasce orarie -->
   <div class="main-table-wrapper">
     <table class="main-table">
       <thead>
@@ -363,13 +363,13 @@
           <th class="col-modello">MODELLO</th>
           <th class="col-commessa">COMMESSA</th>
           <th class="col-check">CONTROLLO VISIVO</th>
-          <th class="col-check">CON TINTA RETRI</th>
-          <th class="col-check">CON GRAFITE</th>
+          <th class="col-check">CONTROLLO RETRI</th>
+          <th class="col-check">CONTROLLO CON GRAFITE</th>
           <th>NOTE</th>
         </tr>
       </thead>
       <tbody id="tableBody">
-        <!-- Dinamico -->
+    
       </tbody>
     </table>
   </div>
@@ -479,7 +479,6 @@
     window.print();
   }
 
-  // Misurazione millimetrica in pixel reali (invariata e perfetta)
   function gestisciFlussoNote(el) {
     let canvas = gestisciFlussoNote.canvas || (gestisciFlussoNote.canvas = document.createElement("canvas"));
     let context = canvas.getContext("2d");
@@ -517,7 +516,7 @@
     }
   }
 
-  // Navigazione e cancellazione fluida con Invio e Backspace
+  // gestione note
   function gestisciTastiNote(el, e) {
     if (e.key === 'Enter') {
       e.preventDefault();
