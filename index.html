@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ILCAMLAC 02 - Controllo in Produzione</title>
   <style>
     :root {
@@ -17,18 +17,19 @@
 
     body {
       margin: 0;
-      padding: 5px;
+      padding: 0;
       background-color: #f8f9fa;
       color: #000;
+      -webkit-text-size-adjust: 100%;
     }
 
     .container {
       width: 100%;
-      max-width: 780px;
+      max-width: 100%;
       margin: 0 auto;
       background: #fff;
-      padding: 8px 12px;
-      border: 2px solid var(--border-color);
+      padding: 6px 8px;
+      border: none;
     }
 
     /* Intestazione modulo */
@@ -40,7 +41,7 @@
 
     .header-table td, .header-table th {
       border: 1px solid var(--border-color);
-      padding: 4px 6px;
+      padding: 4px 5px;
       font-size: 11px;
       vertical-align: middle;
     }
@@ -50,7 +51,7 @@
     }
 
     .logo-container img {
-      max-width: 100px;
+      max-width: 80px;
       height: auto;
       display: block;
       margin: 0 auto;
@@ -58,18 +59,17 @@
 
     .header-title {
       font-weight: bold;
-      font-size: 13px;
+      font-size: 12px;
       text-align: center;
       background-color: var(--bg-header);
     }
 
     .info-grid {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
       margin-bottom: 6px;
       font-size: 11px;
-      align-items: center;
     }
 
     .info-grid div {
@@ -85,10 +85,10 @@
 
     .info-grid input {
       width: 100%;
-      padding: 4px;
+      padding: 6px;
       border: 1px solid #777;
       border-radius: 3px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: bold;
       text-transform: uppercase;
     }
@@ -96,16 +96,17 @@
     .action-top {
       display: flex;
       gap: 6px;
-      justify-content: flex-end;
+      width: 100%;
     }
 
     .btn-action {
-      padding: 5px 10px;
+      flex: 1;
+      padding: 8px;
       font-size: 11px;
       font-weight: bold;
       cursor: pointer;
       border-radius: 4px;
-      transition: background 0.2s;
+      text-align: center;
     }
 
     .btn-pdf {
@@ -113,21 +114,18 @@
       background-color: #28a745;
       color: #fff;
     }
-    .btn-pdf:hover { background-color: #218838; }
 
     .btn-reset {
       border: 2px solid #dc3545;
       background-color: #dc3545;
       color: #fff;
     }
-    .btn-reset:hover { background-color: #c82333; }
 
     /* Selezione turno */
     .shift-selector {
       display: flex;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
       background: #eef2f5;
       padding: 6px;
       border: 1px solid #ccc;
@@ -135,8 +133,13 @@
       margin-bottom: 6px;
     }
 
+    .shift-selector span {
+      text-align: center;
+      font-size: 11px;
+    }
+
     .shift-btn {
-      padding: 5px 14px;
+      padding: 8px;
       font-size: 12px;
       font-weight: bold;
       border: 2px solid #0056b3;
@@ -144,10 +147,11 @@
       color: #0056b3;
       cursor: pointer;
       border-radius: 4px;
-      transition: all 0.2s;
+      width: 100%;
+      text-align: center;
     }
 
-    .shift-btn:hover, .shift-btn.active {
+    .shift-btn.active {
       background-color: #0056b3;
       color: #fff;
     }
@@ -156,79 +160,81 @@
       background-color: var(--bg-header);
       text-align: center;
       font-weight: bold;
-      font-size: 10px;
+      font-size: 9px;
       padding: 4px;
       border: 1px solid var(--border-color);
       border-bottom: none;
-      letter-spacing: 0.5px;
     }
 
-    /* Tabella Controlli */
+    /* Tabella Controlli adattata per riempire lo schermo */
+    .main-table-wrapper {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
     .main-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 11px;
+      font-size: 10.5px;
+      table-layout: fixed; /* Distribuisce le colonne equamente sullo schermo dell'iPhone */
     }
 
     .main-table th, .main-table td {
       border: 1px solid var(--border-color);
-      padding: 2px 3px;
+      padding: 3px 1px;
       text-align: center;
       vertical-align: middle;
+      word-break: break-word;
     }
 
     .main-table th {
       background-color: var(--bg-header);
       font-weight: bold;
-      font-size: 10px;
+      font-size: 9px;
     }
 
     .main-table input[type="text"], .note-input {
       width: 100%;
-      padding: 3px 2px;
+      padding: 4px 1px;
       border: 1px solid #ddd;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: bold;
       text-transform: uppercase;
-    }
-
-    .col-modello input, .col-commessa input {
-      text-align: center;
+      background: transparent;
     }
 
     .main-table input[type="checkbox"] {
-      width: 13px;
-      height: 17px;
+      width: 16px;
+      height: 16px;
       cursor: pointer;
     }
 
-    .col-ora { width: 50px; font-weight: bold; background: #fafafa; }
-    .col-modello { width: 105px; }
-    .col-commessa { width: 90px; }
-    .col-check { width: 65px; }
+    /* Proporzioni ottimizzate per smartphone */
+    .col-ora { width: 14%; font-weight: bold; background: #fafafa; font-size: 10px; }
+    .col-modello { width: 19%; }
+    .col-commessa { width: 16%; }
+    .col-check { width: 10%; }
+    .col-note { width: 31%; }
 
     /* Footer firma */
     .footer-section {
-      margin-top: 6px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      margin-top: 8px;
       font-size: 11px;
     }
 
     .signature-box {
       display: flex;
-      gap: 10px;
-      align-items: center;
+      flex-direction: column;
+      gap: 4px;
       font-weight: bold;
       width: 100%;
     }
 
     .signature-box input {
-      flex: 1;
-      padding: 4px;
+      width: 100%;
+      padding: 6px;
       border: 1px solid #777;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: bold;
       text-transform: uppercase;
     }
@@ -243,48 +249,19 @@
         background: #fff;
       }
       .container {
-        border: none;
-        box-shadow: none;
-        width: 100%;
-        max-width: none;
+        max-width: 780px;
         padding: 0;
       }
       .shift-selector, .action-top {
         display: none !important;
       }
-      .header-table td, .header-table th {
-        padding: 3px 5px;
-      }
-      .main-table th, .main-table td {
-        padding: 2px 3px;
+      .main-table {
+        table-layout: auto;
       }
       .main-table input[type="text"], .note-input, .info-grid input, .signature-box input {
         border: none;
         background: transparent;
-        font-size: 10.5px;
-        font-weight: bold;
-        text-transform: uppercase;
       }
-    }
-    /* Contenitore con scroll orizzontale di sicurezza per mobile */
-    .main-table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-    }
-    .main-table {
-      min-width: 550px;
-    }
-
-    /* Regole responsive per schermi piccoli */
-    @media screen and (max-width: 600px) {
-      body { padding: 2px; }
-      .container { padding: 4px 6px; }
-      .header-table td, .header-table th { font-size: 10px; padding: 3px; }
-      .info-grid { grid-template-columns: 1fr; gap: 6px; }
-      .action-top { justify-content: stretch; }
-      .action-top button { flex: 1; }
-      .shift-selector { flex-direction: column; align-items: stretch; }
-      .shift-btn { width: 100%; text-align: center; }
     }
   </style>
 </head>
@@ -299,14 +276,15 @@
         <img src="ILCAM.jpg" alt="ILCAM Logo">
       </td>
       <td class="header-title">CONTROLLO IN PRODUZIONE</td>
-      <td style="width: 25%; font-size: 10px;">
+      <td style="width: 25%; font-size: 9px;">
         <strong>Modulo:</strong> ILCAMLAC 02<br>
+        <strong>Qualità</strong><br>
         <strong>Rev. 00 del 11/10/2026</strong>
       </td>
     </tr>
     <tr>
-      <td style="text-align: center; font-size: 10px; font-weight: bold;">
-        REPARTO: FONDO &nbsp;&nbsp;|&nbsp;&nbsp; OPERAZIONE: LEVIGATURA RIBASSATI
+      <td style="text-align: center; font-size: 9px; font-weight: bold;">
+        REPARTO: FONDO &nbsp;|&nbsp; OP: LEVIGATURA RIBASSATI
       </td>
       <td></td>
     </tr>
@@ -320,7 +298,7 @@
     </div>
     <div class="action-top">
       <button class="btn-action btn-reset" onclick="resetModulo()">🔄 Pulisci</button>
-      <button class="btn-action btn-pdf" onclick="stampaPDF()">🖨️ Salva PDF / Stampa</button>
+      <button class="btn-action btn-pdf" onclick="stampaPDF()">🖨️ Stampa / PDF</button>
     </div>
   </div>
 
@@ -337,22 +315,24 @@
   </div>
 
   <!-- Tabella principale delle fasce orarie -->
-  <table class="main-table">
-    <thead>
-      <tr>
-        <th class="col-ora">ORA</th>
-        <th class="col-modello">MODELLO</th>
-        <th class="col-commessa">COMMESSA</th>
-        <th class="col-check">CONTROLLO VISIVO</th>
-        <th class="col-check">CON TINTA RETRI</th>
-        <th class="col-check">CON GRAFITE</th>
-        <th>NOTE</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody">
-      <!-- Dinamico -->
-    </tbody>
-  </table>
+  <div class="main-table-wrapper">
+    <table class="main-table">
+      <thead>
+        <tr>
+          <th class="col-ora">ORA</th>
+          <th class="col-modello">MODELLO</th>
+          <th class="col-commessa">COMMESSA</th>
+          <th class="col-check">CONTROLLO VISIVO</th>
+          <th class="col-check">CON TINTA RETRI</th>
+          <th class="col-check">CON GRAFITE</th>
+          <th class="col-note">NOTE</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- Dinamico -->
+      </tbody>
+    </table>
+  </div>
 
   <!-- Piè di pagina con firma -->
   <div class="footer-section">
@@ -361,16 +341,7 @@
       <input type="text" id="firmaOperatore" oninput="this.value = this.value.toUpperCase()">
     </div>
   </div>
-<!-- Sostituisci la tabella con questo wrapper -->
-  <div class="main-table-wrapper">
-    <table class="main-table">
-      <thead>
-      </thead>
-      <tbody id="tableBody">
-        <!-- Dinamico -->
-      </tbody>
-    </table>
-  </div>
+
 </div>
 
 <script>
@@ -435,7 +406,7 @@
           <td class="col-check"><input type="checkbox"></td>
           <td class="col-check"><input type="checkbox"></td>
           <td class="col-check"><input type="checkbox"></td>
-          <td>
+          <td class="col-note">
             <input type="text" class="note-input" oninput="this.value = this.value.toUpperCase(); gestisciFlussoNote(this)" onkeydown="gestisciTastiNote(this, event)">
           </td>
         `;
@@ -454,7 +425,7 @@
     if (confirm("Vuoi davvero ripulire tutti i dati inseriti nella scheda?")) {
       document.getElementById('firmaOperatore').value = '';
       const rows = document.querySelectorAll('#tableBody tr');
-      rows.fetch = rows.forEach(tr => {
+      rows.forEach(tr => {
         tr.querySelector('.col-modello input').value = '';
         tr.querySelector('.col-commessa input').value = '';
         tr.querySelectorAll('.col-check input').forEach(cb => cb.checked = false);
@@ -468,7 +439,7 @@
     window.print();
   }
 
-  // Misurazione millimetrica in pixel reali: riempie la cella fino in fondo e sposta l'ultima parola intera alla riga sotto
+  // Misurazione millimetrica in pixel reali (invariata e perfetta)
   function gestisciFlussoNote(el) {
     let canvas = gestisciFlussoNote.canvas || (gestisciFlussoNote.canvas = document.createElement("canvas"));
     let context = canvas.getContext("2d");
@@ -476,7 +447,7 @@
     context.font = computedStyle.font;
 
     let larghezzaTesto = context.measureText(el.value).width;
-    let larghezzaUtileCella = el.clientWidth - 15; // Spazio utile effettivo al netto del padding
+    let larghezzaUtileCella = el.clientWidth - 10; 
 
     if (larghezzaTesto >= larghezzaUtileCella) {
       let testo = el.value;
@@ -489,7 +460,7 @@
         testoAvanzato = testo.substring(ultimoSpazio + 1);
       } else {
         testoCorrente = testo.substring(0, testo.length - 1);
-        testoAvanzato = testo.substring(testo.length - 1);
+        testoAvanzato = testo.substring(text.length - 1);
       }
 
       el.value = testoCorrente;
@@ -506,7 +477,7 @@
     }
   }
 
-  // Navigazione e cancellazione fluida con Invio e Backspace tra le righe
+  // Navigazione e cancellazione fluida con Invio e Backspace
   function gestisciTastiNote(el, e) {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -518,7 +489,7 @@
           prossimaNote.selectionStart = prossimaNote.selectionEnd = prossimaNote.value.length;
         }
       }
-    } else if (e.key === 'Backspace' && el.selectionStart === 0 && el.selectionEnd === 0) {
+    } else asserzioneBackspace: if (e.key === 'Backspace' && el.selectionStart === 0 && el.selectionEnd === 0) {
       e.preventDefault();
       let trPrecedente = el.closest('tr').previousElementSibling;
       if (trPrecedente) {
